@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const CATEGORIES = [
@@ -22,18 +22,33 @@ const COUNTRIES = [
 const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => {
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
+  const collapseRef = useRef(null);
+
+  const closeMenu = useCallback(() => {
+    const el = collapseRef.current;
+    if (el && el.classList.contains("show")) {
+      const bsCollapse = window.bootstrap?.Collapse.getInstance(el);
+      if (bsCollapse) bsCollapse.hide();
+    }
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchInput.trim()) {
       onSearch(searchInput.trim());
       navigate("/");
+      closeMenu();
     }
   };
 
   const clearSearch = () => {
     setSearchInput("");
     onSearch("");
+  };
+
+  const handleNavClick = () => {
+    clearSearch();
+    closeMenu();
   };
 
   return (
@@ -56,7 +71,7 @@ const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => 
           <span className="navbar-toggler-icon" />
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarContent">
+        <div className="collapse navbar-collapse" id="navbarContent" ref={collapseRef}>
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
             {CATEGORIES.map((cat) => (
               <li className="nav-item" key={cat.key}>
@@ -65,7 +80,7 @@ const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => 
                     `nm-nav-link nav-link${isActive ? " active" : ""}`
                   }
                   to={`/${cat.key}`}
-                  onClick={clearSearch}
+                  onClick={handleNavClick}
                 >
                   {cat.label}
                 </NavLink>
@@ -77,6 +92,7 @@ const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => 
                   `nm-nav-link nav-link${isActive ? " active" : ""}`
                 }
                 to="/saved"
+                onClick={closeMenu}
               >
                 ★ Saved
               </NavLink>
@@ -104,6 +120,7 @@ const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => 
               onChange={(e) => {
                 setCountry(e.target.value);
                 onSearch("");
+                closeMenu();
               }}
               title="Select country"
             >
