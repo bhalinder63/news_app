@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 
 const PAGE_SIZE = 5;
+const PROXY_URL = process.env.REACT_APP_PROXY_URL;
 
-const useFetchNews = ({ category, country, searchQuery, apiKey, setProgress }) => {
+const useFetchNews = ({ category, country, searchQuery, setProgress }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,11 +16,24 @@ const useFetchNews = ({ category, country, searchQuery, apiKey, setProgress }) =
       setLoading(true);
       setError(null);
 
-      const url = searchQuery
-        ? `https://newsapi.org/v2/everything?q=${encodeURIComponent(
-            searchQuery
-          )}&apiKey=${apiKey}&page=${pageNum}&pageSize=${PAGE_SIZE}&language=en&sortBy=publishedAt`
-        : `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}&page=${pageNum}&pageSize=${PAGE_SIZE}`;
+      const params = searchQuery
+        ? new URLSearchParams({
+            endpoint: "everything",
+            q: searchQuery,
+            page: pageNum,
+            pageSize: PAGE_SIZE,
+            language: "en",
+            sortBy: "publishedAt",
+          })
+        : new URLSearchParams({
+            endpoint: "top-headlines",
+            country,
+            category,
+            page: pageNum,
+            pageSize: PAGE_SIZE,
+          });
+
+      const url = `${PROXY_URL}/api/news?${params}`;
 
       try {
         const res = await fetch(url);
@@ -42,7 +56,7 @@ const useFetchNews = ({ category, country, searchQuery, apiKey, setProgress }) =
       setLoading(false);
       setProgress(100);
     },
-    [apiKey, category, country, searchQuery, setProgress]
+    [category, country, searchQuery, setProgress]
   );
 
   useEffect(() => {

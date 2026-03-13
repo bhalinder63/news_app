@@ -5,8 +5,6 @@ import News from "./Components/News";
 import SavedNews from "./Components/SavedNews";
 import LoadingBar from "react-top-loading-bar";
 
-const apiKey = process.env.REACT_APP_NEWS_API_KEY;
-
 const CATEGORIES = [
   "general",
   "business",
@@ -41,10 +39,10 @@ const App = () => {
 
   const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
-  const newsProps = { setProgress, apiKey, country, searchQuery };
+  const newsProps = { setProgress, country, searchQuery };
 
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Navbar
         darkMode={darkMode}
         toggleDarkMode={toggleDarkMode}

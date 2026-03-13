@@ -3,12 +3,11 @@ import Newsitems from "./Newsitems";
 import SkeletonCard from "./SkeletonCard";
 import useFetchNews from "../hooks/useFetchNews";
 
-const News = ({ category, apiKey, setProgress, country, searchQuery }) => {
+const News = ({ category, setProgress, country, searchQuery }) => {
   const { articles, loading, error, hasMore, loadMore } = useFetchNews({
     category,
     country,
     searchQuery,
-    apiKey,
     setProgress,
   });
 
