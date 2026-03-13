@@ -1,28 +1,14 @@
 import React from "react";
 
 const SkeletonCard = () => (
-  <div className="my-3">
-    <div className="card">
-      <span className="skeleton card-img-top" />
-      <div className="card-body">
-        <span
-          className="skeleton d-block mb-2"
-          style={{ height: 20, width: "80%" }}
-        />
-        <span
-          className="skeleton d-block mb-1"
-          style={{ height: 14, width: "100%" }}
-        />
-        <span
-          className="skeleton d-block mb-3"
-          style={{ height: 14, width: "60%" }}
-        />
-        <span
-          className="skeleton d-block mb-3"
-          style={{ height: 12, width: "50%" }}
-        />
-        <span className="skeleton d-block" style={{ height: 32, width: "30%" }} />
-      </div>
+  <div className="nm-card">
+    <div className="skeleton nm-skeleton-img" />
+    <div className="nm-skeleton-body">
+      <span className="skeleton nm-skeleton-line nm-skeleton-line-title" />
+      <span className="skeleton nm-skeleton-line" style={{ width: "100%" }} />
+      <span className="skeleton nm-skeleton-line" style={{ width: "75%" }} />
+      <span className="skeleton nm-skeleton-line nm-skeleton-line-sm" />
+      <span className="skeleton nm-skeleton-btn" />
     </div>
   </div>
 );

@@ -16,34 +16,46 @@ const SavedNews = () => {
 
   if (bookmarks.length === 0) {
     return (
-      <div className="container text-center" style={{ marginTop: "120px" }}>
-        <h3>No saved articles yet</h3>
-        <p className="text-muted">Bookmark articles to read them later.</p>
+      <div className="container">
+        <div className="nm-page-header">
+          <h1 className="nm-heading">
+            <span className="nm-heading-accent">Saved Articles</span>
+          </h1>
+        </div>
+        <div className="nm-empty-state">
+          <div className="nm-empty-icon">🔖</div>
+          <h5 className="nm-empty-title">No saved articles yet</h5>
+          <p className="nm-empty-text">
+            Bookmark articles to read them later.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container my-3" style={{ marginTop: "90px" }}>
-      <h3
-        className="text-center"
-        style={{ margin: "35px 0px", marginTop: "60px" }}
-      >
-        Saved Articles
-      </h3>
-      <div className="row">
+    <div className="container">
+      <div className="nm-page-header">
+        <h1 className="nm-heading">
+          <span className="nm-heading-accent">Saved Articles</span>
+        </h1>
+        <p className="nm-subheading">
+          {bookmarks.length} article{bookmarks.length !== 1 ? "s" : ""} saved
+        </p>
+      </div>
+      <div className="nm-grid">
         {bookmarks.map((article) => (
-          <div className="col-md-4" key={article.newsUrl}>
-            <Newsitems
-              title={article.title}
-              description={article.description}
-              imageUrl={article.imageUrl}
-              newsUrl={article.newsUrl}
-              author={article.author}
-              date={article.date}
-              onBookmarkChange={refreshBookmarks}
-            />
-          </div>
+          <Newsitems
+            key={article.newsUrl}
+            title={article.title}
+            description={article.description}
+            imageUrl={article.imageUrl}
+            newsUrl={article.newsUrl}
+            author={article.author}
+            date={article.date}
+            source={article.source}
+            onBookmarkChange={refreshBookmarks}
+          />
         ))}
       </div>
     </div>
