@@ -43,7 +43,7 @@ Bookmarks are stored directly in `localStorage` as a JSON array (keyed by `newsU
 
 ### Routing
 
-React Router v6 with `basename={process.env.PUBLIC_URL}` for GitHub Pages compatibility. Routes map category names directly to paths (`/business`, `/technology`, etc.). The `key` prop on `<News>` ensures full remount when navigating between categories.
+React Router v6 with `basename={process.env.PUBLIC_URL}` for GitHub Pages compatibility. Routes map category names directly to paths (`/business`, `/technology`, etc.). The `key` prop on `<News>` ensures full remount when navigating between categories. `/saved` renders `SavedNews`, which reads bookmarks directly from `localStorage` on mount.
 
 ### Styling
 

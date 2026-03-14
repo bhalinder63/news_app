@@ -2,13 +2,13 @@ import React, { useState, useCallback, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const CATEGORIES = [
-  { key: "general", label: "General" },
-  { key: "business", label: "Business" },
-  { key: "entertainment", label: "Entertainment" },
-  { key: "health", label: "Health" },
-  { key: "science", label: "Science" },
-  { key: "sports", label: "Sports" },
-  { key: "technology", label: "Technology" },
+  { key: "general", label: "Top", icon: "⚡" },
+  { key: "business", label: "Business", icon: "💼" },
+  { key: "entertainment", label: "Entertain", icon: "🎬" },
+  { key: "health", label: "Health", icon: "❤️" },
+  { key: "science", label: "Science", icon: "🔬" },
+  { key: "sports", label: "Sports", icon: "⚽" },
+  { key: "technology", label: "Tech", icon: "💻" },
 ];
 
 const COUNTRIES = [
@@ -82,6 +82,7 @@ const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => 
                   to={`/${cat.key}`}
                   onClick={handleNavClick}
                 >
+                  <span className="nm-nav-icon">{cat.icon}</span>
                   {cat.label}
                 </NavLink>
               </li>
@@ -94,20 +95,28 @@ const Navbar = ({ darkMode, toggleDarkMode, country, setCountry, onSearch }) => 
                 to="/saved"
                 onClick={closeMenu}
               >
-                ★ Saved
+                <span className="nm-nav-icon">🔖</span>
+                Saved
               </NavLink>
             </li>
           </ul>
 
           <div className="d-flex align-items-center gap-2 mt-2 mt-lg-0">
             <form className="d-flex gap-1" onSubmit={handleSearch}>
-              <input
-                className="form-control nm-search-input"
-                type="search"
-                placeholder="Search news..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
+              <div className="nm-search-wrap">
+                <span className="nm-search-icon" aria-hidden="true">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+                  </svg>
+                </span>
+                <input
+                  className="form-control nm-search-input"
+                  type="search"
+                  placeholder="Search news..."
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
+              </div>
               <button className="nm-search-btn" type="submit">
                 Search
               </button>

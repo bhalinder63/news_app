@@ -3,6 +3,11 @@ import React, { useState, useEffect } from "react";
 const DEFAULT_IMAGE =
   "https://images.unsplash.com/photo-1593789198777-f29bc259780e?w=600&auto=format&fit=crop&q=60";
 
+const readingTime = (text) => {
+  const words = (text || "").split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200)) + " min read";
+};
+
 const timeAgo = (dateStr) => {
   const seconds = Math.floor((Date.now() - new Date(dateStr)) / 1000);
   const intervals = [
@@ -84,6 +89,8 @@ const Newsitems = ({
             <span>{authorName}</span>
             <span className="nm-card-meta-dot" />
             <span>{timeAgo(date)}</span>
+            <span className="nm-card-meta-dot" />
+            <span className="nm-read-time">{readingTime(description)}</span>
           </div>
           <div className="nm-card-actions">
             <button className="nm-btn nm-btn-ghost" onClick={() => setShowModal(true)}>
